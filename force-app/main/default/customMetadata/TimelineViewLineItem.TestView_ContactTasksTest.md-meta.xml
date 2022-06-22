@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>TestView_ContactTasksTest</label>
+    <protected>true</protected>
+    <values>
+        <field>TimelineConfigurationId__c</field>
+        <value xsi:type="xsd:string">Contact_Tasks_Test</value>
+    </values>
+    <values>
+        <field>TimelineViewId__c</field>
+        <value xsi:type="xsd:string">TestView</value>
+    </values>
+</CustomMetadata>

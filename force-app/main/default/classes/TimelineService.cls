@@ -11,7 +11,7 @@ public with sharing class TimelineService {
     private static Map<String, Schema.DescribeFieldResult> fieldDescribeCache = new Map<String, Schema.DescribeFieldResult>();
 
     @AuraEnabled(cacheable=true)
-    public static Map<String, String> getTimelineTypes(String parentObjectId, String parentFieldName) {
+    public static Map<String, String> getTimelineTypes(String parentObjectId, String parentFieldName, String viewName) { //NOPMD
         try {
             Map<String, String> parentDetails = getParentDetails(parentObjectId, parentFieldName);
 
@@ -20,6 +20,13 @@ public with sharing class TimelineService {
             parentObjectId = parentDetails.get('Id');
 
             Map<String, String> childObjects = getChildObjects(parentObjectType);
+
+            Set<Id> configIds = new Set<Id>();
+            String filterIds = '';
+            if (String.isNotBlank(viewName) && viewName != 'ALL') {
+                configIds = getViewConfigurationIds(viewName);
+                filterIds = ' AND Id =:configIds ';
+            }
 
             String queryTimelineConfiguration =
                 'SELECT Active__c, ' +
@@ -33,6 +40,7 @@ public with sharing class TimelineService {
                 Test.isRunningTest() +
                 ' AND ' +
                 'Parent_Object__c =:parentConfigType ' +
+                filterIds +
                 'ORDER BY Sequence__c ASC '; //NOPMD
 
             List<Timeline_Configuration__mdt> listOfTimelineConfigurations = Database.query(queryTimelineConfiguration); //NOPMD
@@ -253,7 +261,7 @@ public with sharing class TimelineService {
                             '),';
                     }
                 }
-            }
+            }         
 
             innerQuery = innerQuery.removeEnd(',');
 
@@ -392,6 +400,20 @@ public with sharing class TimelineService {
             }
         }
         return childRelatedObjects;
+    }
+
+    private static Set<Id> getViewConfigurationIds(String viewName) {
+        Set<Id> configIds = new Set<Id>();
+
+        List<TimelineViewLineItem__mdt> viewItems = TimelineViewLineItem__mdt.getAll().values();
+        for (TimelineViewLineItem__mdt item : viewItems) {
+            TimelineView__mdt view = TimelineView__mdt.getInstance(item.TimelineViewId__c);
+            if (view.DeveloperName == viewName) {
+                configIds.add(item.TimelineConfigurationId__c);
+            }
+        }
+
+        return configIds;
     }
 
     private static Map<String, String> getFieldValues(String field, Sobject records, String objectName) {

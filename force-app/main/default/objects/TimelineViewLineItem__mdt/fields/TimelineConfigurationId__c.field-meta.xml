@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TimelineConfigurationId__c</fullName>
+    <description>A Timeline Configuration that this Timeline View will have access</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>A Timeline Configuration that this Timeline View will have access</inlineHelpText>
+    <label>Timeline Configuration</label>
+    <referenceTo>Timeline_Configuration__mdt</referenceTo>
+    <relationshipLabel>Timeline Views</relationshipLabel>
+    <relationshipName>TimelineViews</relationshipName>
+    <required>true</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

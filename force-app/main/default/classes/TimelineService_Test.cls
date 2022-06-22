@@ -11,7 +11,7 @@
 @isTest(seeAllData=false)
 private with sharing class TimelineService_Test {
     private static User currentUser;
-
+    
     @isTest
     static void testTimelineTypesForFilter() {
         Contact janeLo = new Contact(FirstName = 'Jane', LastName = 'Lo');
@@ -19,7 +19,7 @@ private with sharing class TimelineService_Test {
         insert janeLo;
 
         Test.startTest();
-        Map<String, String> timelineTypes = TimelineService.getTimelineTypes(janeLo.Id, 'Default_Picklist_Value');
+        Map<String, String> timelineTypes = TimelineService.getTimelineTypes(janeLo.Id, 'Default_Picklist_Value', 'TestView');
         Test.stopTest();
 
         System.assertEquals(
@@ -78,7 +78,7 @@ private with sharing class TimelineService_Test {
         Contact juneLo = new Contact(FirstName = 'June', LastName = 'Lo');
 
         insert juneLo;
-
+        
         CampaignMember juneAttends = new CampaignMember(CampaignId = eventCampaign.Id, ContactId = juneLo.Id);
 
         insert juneAttends;
@@ -191,7 +191,7 @@ private with sharing class TimelineService_Test {
         insert forgotPassword;
 
         Test.startTest();
-        Map<String, String> timelineTypes = TimelineService.getTimelineTypes(forgotPassword.Id, 'ContactId');
+        Map<String, String> timelineTypes = TimelineService.getTimelineTypes(forgotPassword.Id, 'ContactId', 'TestView');
 
         List<Map<String, String>> timelineRecords = TimelineService.getTimelineRecords(
             forgotPassword.Id,
@@ -225,7 +225,7 @@ private with sharing class TimelineService_Test {
 
         try {
             Test.startTest();
-            Map<String, String> timelineTypes = TimelineService.getTimelineTypes(brokenLift.Id, 'ContactId');
+            Map<String, String> timelineTypes = TimelineService.getTimelineTypes(brokenLift.Id, 'ContactId', 'TestView');
         } catch (Exception e) {
             hasFailed = true;
         } finally {
