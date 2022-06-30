@@ -1,0 +1,34 @@
+:host {
+  --custom-accordionHeadingFontSize: 0.8125rem;
+}
+
+.custom-button {
+  --slds-c-button-radius-border: 5px;
+}
+
+.custom-accordion__section {
+  --slds-c-accordion-summary-color-background: var(--lwc-colorBackground);
+  --slds-c-accordion-heading-font-size: var(--custom-accordionHeadingFontSize);
+  --slds-c-accordion-section-spacing-block-end: var(--lwc-spacingXSmall);
+  --slds-c-accordion-section-spacing-block-start: var(--lwc-spacingXSmall);
+  --slds-c-accordion-section-spacing-inline-end: var(--lwc-spacingXSmall);
+  --slds-c-accordion-section-spacing-inline-start: var(--lwc-spacingXSmall);
+  --slds-c-accordion-sizing-border: 0;
+  font-weight: bold;
+}
+
+.custom-timeline {
+  font-weight: normal;
+}
+
+.custom-timeline__item {
+  --custom-timelineItemBgColor: rgb(229, 229, 229);
+}
+
+.custom-timeline__item:before {
+  background: var(--custom-timelineItemBgColor);
+}
+
+.custom-form-element__static {
+  width: calc(100% - var(--lwc-squareIconSmallBoundary, 1.5rem));
+}

@@ -1,0 +1,261 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <lightning-card>
+    <lightning-layout multiple-rows="true" horizontal-align="center">
+      <lightning-layout-item flexibility="auto" size="12" large-device-size="8">
+        <lightning-input
+          type="search"
+          variant="label-hidden"
+          placeholder={labels.searchPlaceholder}
+          onchange={handleSearch}
+        ></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item class="slds-var-p-top_small" size="12">
+        <lightning-layout vertical-align="center" horizontal-align="end">
+          <lightning-layout-item flexibility="no-flex">
+            <lightning-button
+              variant="base"
+              label={labels.refresh}
+              onclick={handleRefresh}
+              class="custom-button"
+            ></lightning-button>
+          </lightning-layout-item>
+          <lightning-layout-item class="slds-var-p-horizontal_xx-small" flexibility="no-flex">
+            <span>&bull;</span>
+          </lightning-layout-item>
+          <lightning-layout-item flexibility="no-flex">
+            <lightning-button
+              variant="base"
+              label={labels.expandAll}
+              onclick={handleExpandAll}
+              class="custom-button"
+            ></lightning-button>
+          </lightning-layout-item>
+          <lightning-layout-item class="slds-var-p-horizontal_xx-small" flexibility="no-flex">
+            <span>&bull;</span>
+          </lightning-layout-item>
+          <lightning-layout-item flexibility="no-flex">
+            <lightning-button
+              variant="base"
+              label={labels.collapseAll}
+              onclick={handleCollapseAll}
+              class="custom-button"
+            ></lightning-button>
+          </lightning-layout-item>
+        </lightning-layout>
+      </lightning-layout-item>
+    </lightning-layout>
+    <lightning-accordion
+      allow-multiple-sections-open="true"
+      active-section-name={activeSections}
+      onsectiontoggle={handleSectionToggle}
+    >
+      <template iterator:it={activitySections}>
+        <lightning-accordion-section
+          key={it.value.name}
+          name={it.value.name}
+          label={it.value.name}
+          class="slds-var-m-vertical_x-small custom-accordion__section"
+        >
+          <div class="slds-var-m-top_x-small custom-timeline">
+            <template if:true={it.first}>
+              <template if:true={noUpcomingActivities}>
+                <div class="slds-text-align_center">
+                  <p>{labels.noActivities}</p>
+                </div>
+              </template>
+            </template>
+            <ul class="slds-timeline">
+              <template for:each={it.value.items} for:item="item">
+                <li
+                  key={item.objectId}
+                  data-item-id={item.objectId}
+                  class="slds-var-m-vertical_xx-small"
+                >
+                  <div
+                    class="slds-timeline__item_expandable custom-timeline__item"
+                    data-name="item-container"
+                    data-item-id={item.objectId}
+                  >
+                    <div class="slds-media">
+                      <div class="slds-media__figure">
+                        <lightning-button-icon
+                          icon-name="utility:switch"
+                          icon-class="slds-button__icon slds-timeline__details-action-icon"
+                          size="medium"
+                          variant="bare"
+                          alternative-text="Toggle item details"
+                          onclick={toggleItemDetails}
+                        ></lightning-button-icon>
+                        <lightning-icon
+                          class="slds-icon_container slds-timeline__icon"
+                          icon-name={item.activityIcon}
+                          size="small"
+                        ></lightning-icon>
+                      </div>
+
+                      <div class="slds-media__body">
+                        <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
+                          <div
+                            class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space"
+                          >
+                            <h3 class="slds-truncate" title={item.activitySubjectField}>
+                              <a href={item.objectUrl}>
+                                <strong>{item.activitySubjectField}</strong>
+                              </a>
+                            </h3>
+                          </div>
+                          <div class="slds-timeline__actions slds-timeline__actions_inline">
+                            <div class="slds-timeline__date">
+                              <lightning-formatted-date-time
+                                value={item.activityDate}
+                                year="numeric"
+                                day="2-digit"
+                                month="short"
+                                time-zone="UTC"
+                              >
+                              </lightning-formatted-date-time>
+                            </div>
+                            <lightning-button-menu
+                              title="Show menu"
+                              alternative-text="Show menu"
+                              icon-size="x-small"
+                              onselect={handleMenuOption}
+                            >
+                              <lightning-menu-item value="edit" label="Edit"></lightning-menu-item>
+                            </lightning-button-menu>
+                          </div>
+                        </div>
+
+                        <template if:true={item.createdByName}>
+                          <p class="slds-m-horizontal_xx-small">
+                            <a href={item.createdByUserUrl}>{item.createdByName}</a>
+                            &#32;{labels.createdItem}&#32;{item.objectName}
+                          </p>
+                        </template>
+
+                        <article
+                          class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small"
+                          aria-hidden="true"
+                        >
+                          <template if:true={item.displayRecordForm}>
+                            <lightning-record-form
+                              record-id={item.objectId}
+                              object-api-name={item.objectName}
+                              layout-type="Compact"
+                              columns="2"
+                              mode="readonly"
+                            >
+                            </lightning-record-form>
+                            <template if:true={item.activityDescriptionField}>
+                              <div
+                                class="slds-form-element slds-var-p-horizontal_xx-small slds-var-m-bottom_x-small"
+                              >
+                                <label class="slds-form-element__label" for="detail-description-1"
+                                  >{item.activityDescriptionLabel}</label
+                                >
+                                <div class="slds-form-element__control">
+                                  <lightning-formatted-text
+                                    id="detail-description-1"
+                                    value={item.activityDescriptionField}
+                                    class="slds-border_bottom slds-form-element__static custom-form-element__static"
+                                  >
+                                  </lightning-formatted-text>
+                                </div>
+                              </div>
+                            </template>
+                          </template>
+                          <template if:false={item.displayRecordForm}>
+                            <lightning-layout multiple-rows="true">
+                              <lightning-layout-item size="6">
+                                <div
+                                  class="slds-form-element slds-var-p-horizontal_xx-small slds-var-m-bottom_x-small"
+                                >
+                                  <label class="slds-form-element__label" for="detail-position-date"
+                                    >{item.positionDateField}</label
+                                  >
+                                  <div class="slds-form-element__control">
+                                    <lightning-formatted-date-time
+                                      id="detail-position-date"
+                                      value={item.activityDate}
+                                      year="numeric"
+                                      day="numeric"
+                                      month="numeric"
+                                      hour="2-digit"
+                                      minute="2-digit"
+                                      time-zone="UTC"
+                                      class="slds-border_bottom slds-form-element__static custom-form-element__static"
+                                    >
+                                    </lightning-formatted-date-time>
+                                  </div>
+                                </div>
+                              </lightning-layout-item>
+                              <template if:true={item.fallbackTooltipValue}>
+                                <lightning-layout-item size="6">
+                                  <div
+                                    class="slds-form-element slds-var-p-horizontal_xx-small slds-var-m-bottom_x-small"
+                                  >
+                                    <label
+                                      class="slds-form-element__label"
+                                      for="detail-fallback-tolltip"
+                                      >{item.fallbackTooltipField}</label
+                                    >
+                                    <div class="slds-form-element__control">
+                                      <lightning-formatted-text
+                                        id="detail-fallback-tolltip"
+                                        value={item.fallbackTooltipValue}
+                                        class="slds-border_bottom slds-form-element__static custom-form-element__static"
+                                      >
+                                      </lightning-formatted-text>
+                                    </div>
+                                  </div>
+                                </lightning-layout-item>
+                              </template>
+                              <template if:true={item.activityDescriptionField}>
+                                <lightning-layout-item size="12">
+                                  <div
+                                    class="slds-form-element slds-var-p-horizontal_xx-small slds-var-m-bottom_x-small"
+                                  >
+                                    <label
+                                      class="slds-form-element__label"
+                                      for="detail-description-2"
+                                      >{item.activityDescriptionLabel}</label
+                                    >
+                                    <div class="slds-form-element__control">
+                                      <lightning-formatted-text
+                                        id="detail-description-2"
+                                        value={item.activityDescriptionField}
+                                        class="slds-border_bottom slds-form-element__static custom-form-element__static"
+                                      >
+                                      </lightning-formatted-text>
+                                    </div>
+                                  </div>
+                                </lightning-layout-item>
+                              </template>
+                            </lightning-layout>
+                          </template>
+                        </article>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </lightning-accordion-section>
+      </template>
+    </lightning-accordion>
+    <template if:true={noActivities}>
+      <div
+        class="slds-text-align_center slds-border_top slds-var-m-top_medium slds-var-p-top_medium"
+      >
+        <p>{labels.noPastActivity}</p>
+      </div>
+    </template>
+    <template if:false={noActivities}>
+      <div class="slds-text-align_center">
+        <p>{labels.noMoreActivities}</p>
+      </div>
+    </template>
+  </lightning-card>
+</template>

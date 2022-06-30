@@ -7,8 +7,24 @@
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
+        <field>Activity_Description_Field__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Activity_Icon__c</field>
+        <value xsi:type="xsd:string">standard:event</value>
+    </values>
+    <values>
+        <field>Activity_Subject_Field__c</field>
+        <value xsi:type="xsd:string">Id</value>
+    </values>
+    <values>
         <field>Detail_Field__c</field>
         <value xsi:type="xsd:string">Event.Subject</value>
+    </values>
+    <values>
+        <field>Display_Activity_Record_Form__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Drilldown_Id_Field__c</field>
@@ -25,6 +41,10 @@
     <values>
         <field>Icon__c</field>
         <value xsi:type="xsd:string">/img/icon/t4v35/standard/event.svg</value>
+    </values>
+    <values>
+        <field>Inclusion_Field__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Object_Name__c</field>
@@ -45,6 +65,10 @@
     <values>
         <field>Sequence__c</field>
         <value xsi:type="xsd:double">20.0</value>
+    </values>
+    <values>
+        <field>Test__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Tooltip_Id_Field__c</field>

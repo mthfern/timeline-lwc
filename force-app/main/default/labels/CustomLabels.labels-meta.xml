@@ -144,4 +144,76 @@
         <shortDescription>Timeline_Navigation_Toast_Header</shortDescription>
         <value>Navigation Not Permitted</value>
     </labels>
+    <labels>
+        <fullName>HistoryTimeline_CollapseAll</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline Collapse All</shortDescription>
+        <value>Collapse All</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_CreatedItem</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline Created Item</shortDescription>
+        <value>created a new</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_ExpandAll</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline Expand All</shortDescription>
+        <value>Expand All</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_NoActivities</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline No Activities</shortDescription>
+        <value>No activities to show.</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_NoMorePastActivity</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline No More Past Activity</shortDescription>
+        <value>No more past activities to load.</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_NoPastActivity</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline No Past Activity</shortDescription>
+        <value>No past activity.</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_Refresh</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline Refresh</shortDescription>
+        <value>Refresh</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_Upcoming</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline Upcoming</shortDescription>
+        <value>Upcoming</value>
+    </labels>
+    <labels>
+        <fullName>HistoryTimeline_SearchPlaceholder</fullName>
+        <categories>History Timeline</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>History Timeline Search Placeholder</shortDescription>
+        <value>Search...</value>
+    </labels>
 </CustomLabels>

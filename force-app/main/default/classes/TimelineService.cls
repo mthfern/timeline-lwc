@@ -129,7 +129,11 @@ public with sharing class TimelineService {
                 'Tooltip_Id_Field__c, ' +
                 'Tooltip_Object_Name__c, ' +
                 'Fallback_Tooltip_Field__c, ' +
-                'Inclusion_Field__c ' +
+                'Inclusion_Field__c, ' +
+                'Activity_Subject_Field__c, ' +
+                'Activity_Description_Field__c, ' +
+                'Activity_Icon__c, ' +
+                'Display_Activity_Record_Form__c ' +
                 'FROM Timeline_Configuration__mdt ' +
                 'WHERE Active__c = true AND ' +
                 'Test__c = ' +
@@ -164,6 +168,10 @@ public with sharing class TimelineService {
                 timelineRecord.tooltipObject = timelineConfigurationRecord.Tooltip_Object_Name__c;
                 timelineRecord.drilldownIdField = timelineConfigurationRecord.Drilldown_Id_Field__c;
                 timelineRecord.inclusionField = timelineConfigurationRecord.Inclusion_Field__c;
+                timelineRecord.activitySubjectField = timelineConfigurationRecord.Activity_Subject_Field__c;
+                timelineRecord.activityDescriptionField = timelineConfigurationRecord.Activity_Description_Field__c;
+                timelineRecord.activityIcon = timelineConfigurationRecord.Activity_Icon__c;
+                timelineRecord.displayActivityRecordForm = timelineConfigurationRecord.Display_Activity_Record_Form__c;
 
                 mapOfTimelineConfigurationRecords.put(
                     timelineRecord.objectName + timelineRecord.relationshipName,
@@ -190,6 +198,9 @@ public with sharing class TimelineService {
                     String tooltipIdField = String.valueOf(tcr.tooltipIdField);
                     String drilldownIdField = String.valueOf(tcr.drilldownIdField);
                     String typeField = String.valueOf(tcr.type);
+                    String activitySubjectField = String.valueOf(tcr.activitySubjectField);
+                    String activityDescriptionField = String.valueOf(tcr.activityDescriptionField);
+                    String activityIcon = String.valueOf(tcr.activityIcon);
 
                     String selectStatement = '(SELECT Id, ' + tcr.detailField + ', ' + tcr.positionDateField + '';
 
@@ -227,6 +238,31 @@ public with sharing class TimelineService {
                         selectStatement = selectStatement + ', ' + tcr.tooltipIdField + '';
                     }
 
+                    if (String.isNotBlank(activitySubjectField) && !selectStatement.contains(activitySubjectField)) {
+                        selectStatement = selectStatement + ', ' + activitySubjectField;
+                    }
+
+                    if (
+                        String.isNotBlank(activityDescriptionField) &&
+                        !selectStatement.contains(activityDescriptionField)
+                    ) {
+                        selectStatement = selectStatement + ', ' + activityDescriptionField;
+                    }
+
+                    if (containsField(objName, 'CreatedById')) {
+                        if (!selectStatement.contains('CreatedById')) {
+                            selectStatement = selectStatement + ', CreatedById';
+                        }
+
+                        if (!selectStatement.contains('CreatedBy.Name')) {
+                            selectStatement = selectStatement + ', CreatedBy.Name';
+                        }
+
+                        if (!selectStatement.contains('CreatedDate')) {
+                            selectStatement = selectStatement + ', CreatedDate';
+                        }
+                    }
+
                     String relationship = tcr.relationshipName;
                     String optionalFilter = '';
 
@@ -261,7 +297,7 @@ public with sharing class TimelineService {
                             '),';
                     }
                 }
-            }         
+            }
 
             innerQuery = innerQuery.removeEnd(',');
 
@@ -324,6 +360,27 @@ public with sharing class TimelineService {
 
                                 Map<String, String> typeValues = getFieldValues(tr.type, eachCh, tr.objectName);
 
+                                Map<String, String> activitySubjectValues = getFieldValues(
+                                    tr.activitySubjectField,
+                                    eachCh,
+                                    tr.objectName
+                                );
+
+                                Map<String, String> activityDescriptionValues = getFieldValues(
+                                    tr.activityDescriptionField,
+                                    eachCh,
+                                    tr.objectName
+                                );
+
+                                Map<String, String> createdByIdValues = new Map<String, String>();
+                                Map<String, String> createdByNameValues = new Map<String, String>();
+                                Map<String, String> createdDateValues = new Map<String, String>();
+                                if (eachCh.getPopulatedFieldsAsMap().containsKey('CreatedById')) {
+                                    createdByIdValues = getFieldValues('CreatedById', eachCh, tr.objectName);
+                                    createdByNameValues = getFieldValues('CreatedBy.Name', eachCh, tr.objectName);
+                                    createdDateValues = getFieldValues('CreatedDate', eachCh, tr.objectName);
+                                }
+
                                 if (tr.objectName == 'ContentDocumentLink') {
                                     //NOPMD
                                     myId = String.valueOf(eachCh.get('ContentDocumentId'));
@@ -352,6 +409,15 @@ public with sharing class TimelineService {
                                 mapData.put('type', typeValues.get('value'));
                                 mapData.put('icon', tr.icon);
                                 mapData.put('iconBackground', tr.iconBackground);
+                                mapData.put('activitySubjectLabel', activitySubjectValues.get('label'));
+                                mapData.put('activitySubjectField', activitySubjectValues.get('value'));
+                                mapData.put('activityDescriptionLabel', activityDescriptionValues.get('label'));
+                                mapData.put('activityDescriptionField', activityDescriptionValues.get('value'));
+                                mapData.put('activityIcon', tr.activityIcon);
+                                mapData.put('displayActivityRecordForm', String.valueOf(tr.displayActivityRecordForm));
+                                mapData.put('createdById', String.valueOf(createdByIdValues.get('value')));
+                                mapData.put('createdByName', String.valueOf(createdByNameValues.get('value')));
+                                mapData.put('createdDate', String.valueOf(createdDateValues.get('value')));
 
                                 if (positionValues.get('value') != null && positionValues.get('value') != '') {
                                     listOfTimelineData.add(mapData);
@@ -623,6 +689,14 @@ public with sharing class TimelineService {
         return parentDetails;
     }
 
+    private static Boolean containsField(String objectName, String fieldName) {
+        return ((SObject) Type.forName(objectName).newInstance())
+            .getSObjectType()
+            .getDescribe()
+            .fields.getMap()
+            .containsKey(fieldName);
+    }
+
     private class TimelineRecord { //NOPMD
         private String relationshipName;
         private String parentObject;
@@ -642,6 +716,10 @@ public with sharing class TimelineService {
         private String fallbackNameField;
         private String fallbackNameValue;
         private String inclusionField;
+        private String activitySubjectField;
+        private String activityDescriptionField;
+        private String activityIcon;
+        private boolean displayActivityRecordForm;
         private Id recordId;
     }
 

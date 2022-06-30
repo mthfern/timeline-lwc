@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Display_Activity_Record_Form__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used for Custom Activity Timeline only. Use to display fields from object&apos;s compact layout as details (the compact layout corresponds to the fields on the highlights panel at the top of the record).</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Used for Custom Activity Timeline only. Use to display fields from object&apos;s compact layout as details (the compact layout corresponds to the fields on the highlights panel at the top of the record).</inlineHelpText>
+    <label>Display Compact Layout</label>
+    <type>Checkbox</type>
+</CustomField>

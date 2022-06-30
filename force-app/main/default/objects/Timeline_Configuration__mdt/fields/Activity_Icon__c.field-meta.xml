@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activity_Icon__c</fullName>
+    <defaultValue>&quot;standard:default&quot;</defaultValue>
+    <description>Only valid for Activity Timeline. The Lightning Design System name of the icon to be used for the object.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Only valid for Activity Timeline. The Lightning Design System name of the icon.
+Names are written in the format &apos;standard:default&apos; where &apos;standard&apos; is the category,
+and &apos;default&apos; is the specific icon to be displayed.</inlineHelpText>
+    <label>Activity Icon</label>
+    <length>150</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

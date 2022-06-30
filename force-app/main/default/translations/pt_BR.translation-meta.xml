@@ -71,5 +71,41 @@
     <customLabels>
         <label>Navegação Não Permitido</label>
         <name>Timeline_Navigation_Toast_Header</name>
+    </customLabels>    
+    <customLabels>
+        <label>Colapsar Tudo</label>
+        <name>HistoryTimeline_CollapseAll</name>
+    </customLabels>
+    <customLabels>
+        <label>criou um(a)</label>
+        <name>HistoryTimeline_CreatedItem</name>
+    </customLabels>
+    <customLabels>
+        <label>Expandir Tudo</label>
+        <name>HistoryTimeline_ExpandAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Nenhuma atividade para mostrar.</label>
+        <name>HistoryTimeline_NoActivities</name>
+    </customLabels>
+    <customLabels>
+        <label>Não há mais atividades passadas para mostrar.</label>
+        <name>HistoryTimeline_NoMorePastActivity</name>
+    </customLabels>
+    <customLabels>
+        <label>Não há atividades passadas para mostrar.</label>
+        <name>HistoryTimeline_NoPastActivity</name>
+    </customLabels>
+    <customLabels>
+        <label>Atualizar</label>
+        <name>HistoryTimeline_Refresh</name>
+    </customLabels>
+    <customLabels>
+        <label>Próximo</label>
+        <name>HistoryTimeline_Upcoming</name>
+    </customLabels>
+    <customLabels>
+        <label>Pesquisar...</label>
+        <name>HistoryTimeline_SearchPlaceholder</name>
     </customLabels>
 </Translations>
