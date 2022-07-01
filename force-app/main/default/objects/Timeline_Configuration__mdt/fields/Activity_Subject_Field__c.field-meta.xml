@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Activity_Subject_Field__c</fullName>
-    <defaultValue>&quot;Id&quot;</defaultValue>
     <description>Used for Custom Activity Timeline only. Field api name to be used as subject.</description>
     <externalId>false</externalId>
     <fieldManageability>SubscriberControlled</fieldManageability>

@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Activity_Subject_Field__c</field>
-        <value xsi:type="xsd:string">Id</value>
+        <value xsi:type="xsd:string">Case.CaseNumber</value>
     </values>
     <values>
         <field>Detail_Field__c</field>
